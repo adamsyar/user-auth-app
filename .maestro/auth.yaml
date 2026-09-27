@@ -1,0 +1,79 @@
+appId: host.exp.Exponent
+---
+- tapOn:
+    text: Logout
+    optional: true
+- stopApp
+- openLink: exp://127.0.0.1:8081
+- extendedWaitUntil:
+    visible: 'Welcome back.'
+    timeout: 30000
+- takeScreenshot: docs/screenshots/login
+- tapOn: 'Go to Signup'
+- takeScreenshot: docs/screenshots/signup
+- scrollUntilVisible:
+    element:
+      text: Signup
+    direction: DOWN
+- tapOn: 'Signup'
+- assertVisible: 'Enter your name.'
+- takeScreenshot: docs/screenshots/validation
+- tapOn: 'Your full name'
+- inputText: 'user 1'
+- tapOn: 'you@example.com'
+- inputText: 'user@test.com'
+- tapOn: 'Show password'
+- tapOn:
+    id: password
+- inputText: 'secret123'
+- assertVisible: secret123
+- assertVisible: 'Hide password'
+- tapOn: 'Hide password'
+- scrollUntilVisible:
+    element:
+      text: Signup
+    direction: DOWN
+- tapOn: 'Signup'
+- assertVisible: 'You’re home.'
+- assertVisible: 'user@test.com'
+- takeScreenshot: docs/screenshots/home
+- tapOn: 'Logout'
+- assertVisible: 'Welcome back.'
+- tapOn: 'you@example.com'
+- inputText: 'user@test.com'
+- tapOn: 'Show password'
+- tapOn:
+    id: password
+- inputText: 'wrong123'
+- tapOn: 'Hide password'
+- scrollUntilVisible:
+    element:
+      text: Login
+    direction: DOWN
+- tapOn: 'Login'
+- assertVisible: 'Email or password is incorrect. Please try again.'
+- takeScreenshot: docs/screenshots/incorrect-credentials
+- tapOn: 'Show password'
+- tapOn:
+    id: password
+- eraseText: 30
+- inputText: 'secret123'
+- tapOn: 'Hide password'
+- scrollUntilVisible:
+    element:
+      text: Login
+    direction: DOWN
+- tapOn: 'Login'
+- assertVisible: 'You’re home.'
+- stopApp
+- openLink: exp://127.0.0.1:8081
+- extendedWaitUntil:
+    visible: 'You’re home.'
+    timeout: 30000
+- tapOn: 'Logout'
+- assertVisible: 'Welcome back.'
+- stopApp
+- openLink: exp://127.0.0.1:8081
+- extendedWaitUntil:
+    visible: 'Welcome back.'
+    timeout: 30000

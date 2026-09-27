@@ -77,13 +77,6 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     letterSpacing: -1,
   },
-  brandCaption: {
-    flex: 1,
-    textAlign: 'right',
-    color: colors.muted,
-    fontSize: 8,
-    letterSpacing: 1.2,
-  },
   content: { flex: 1 },
   bottom: {
     textAlign: 'center',

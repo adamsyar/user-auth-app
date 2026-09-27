@@ -3,8 +3,8 @@ import { createAuthService } from '../src/auth/service';
 import { validateLogin, validateSignup } from '../src/auth/validation';
 
 const input = {
-  name: '  Alex Chen ',
-  email: ' Alex@Example.com ',
+  name: '  user 1 ',
+  email: ' User@Test.com ',
   password: 'secret',
 };
 test('validates required fields and password boundary', () => {
@@ -21,12 +21,12 @@ test('signup normalizes identity, omits password, and supports subsequent login'
   const service = createAuthService();
   const user = await service.signup(input);
   expect(user).toEqual({
-    id: 'alex@example.com',
-    name: 'Alex Chen',
-    email: 'alex@example.com',
+    id: 'user@test.com',
+    name: 'user 1',
+    email: 'user@test.com',
   });
   expect(
-    await service.login({ email: 'ALEX@example.com', password: 'secret' }),
+    await service.login({ email: 'USER@test.com', password: 'secret' }),
   ).toEqual(user);
 });
 test('rejects duplicate accounts and incorrect credentials', async () => {
