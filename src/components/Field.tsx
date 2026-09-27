@@ -1,5 +1,7 @@
+import { PasswordIcon } from './PasswordIcon';
 import { useState } from 'react';
 import {
+  Pressable,
   StyleSheet,
   Text,
   TextInput,
@@ -8,7 +10,8 @@ import {
 } from 'react-native';
 import { colors } from '../theme/theme';
 type Props = TextInputProps & { label: string; error?: string };
-export function Field({ label, error, ...props }: Props) {
+export function Field({ label, error, secureTextEntry, ...props }: Props) {
+  const [visible, setVisible] = useState(false);
   const [focused, setFocused] = useState(false);
   return (
     <View style={styles.field}>
@@ -21,7 +24,10 @@ export function Field({ label, error, ...props }: Props) {
         ]}
       >
         <TextInput
+          key={secureTextEntry ? String(visible) : label}
           {...props}
+          testID={props.testID ?? label.toLowerCase()}
+          secureTextEntry={secureTextEntry && !visible}
           accessibilityLabel={label}
           accessibilityHint={error}
           placeholderTextColor="#89918b"
@@ -29,6 +35,26 @@ export function Field({ label, error, ...props }: Props) {
           onFocus={() => setFocused(true)}
           onBlur={() => setFocused(false)}
         />
+        {secureTextEntry ? (
+          <Pressable
+            accessibilityRole="button"
+            accessibilityLabel={visible ? 'Hide password' : 'Show password'}
+            accessibilityState={{ disabled: props.editable === false }}
+            disabled={props.editable === false}
+            onPress={() => {
+              setFocused(false);
+              setVisible((current) => !current);
+            }}
+            style={{
+              width: 48,
+              minHeight: 48,
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            <PasswordIcon hidden={visible} />
+          </Pressable>
+        ) : null}
       </View>
       {error ? (
         <Text

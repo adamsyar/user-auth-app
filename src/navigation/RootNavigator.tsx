@@ -1,3 +1,4 @@
+import { ActivityIndicator, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useAuth } from '../auth/AuthContext';
@@ -7,7 +8,24 @@ import { HomeScreen } from '../screens/HomeScreen';
 import type { RootStackParamList } from './types';
 const Stack = createNativeStackNavigator<RootStackParamList>();
 export function RootNavigator() {
-  const { user } = useAuth();
+  const { user, isRestoring } = useAuth();
+  if (isRestoring)
+    return (
+      <View
+        style={{
+          flex: 1,
+          alignItems: 'center',
+          justifyContent: 'center',
+          backgroundColor: '#f5f4f0',
+        }}
+      >
+        <ActivityIndicator
+          accessibilityLabel="Restoring your session"
+          color="#24634e"
+          size="large"
+        />
+      </View>
+    );
   return (
     <NavigationContainer>
       <Stack.Navigator

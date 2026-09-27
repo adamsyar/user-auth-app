@@ -1,11 +1,12 @@
 import { test, expect } from '@jest/globals';
-import { act, renderHook } from '@testing-library/react-native';
+import { act, renderHook, waitFor } from '@testing-library/react-native';
 import { AuthProvider, useAuth } from '../src/auth/AuthContext';
 
 test('context signs up, logs out, rejects bad credentials, and logs back in', async () => {
   const { result } = await renderHook(() => useAuth(), {
     wrapper: AuthProvider,
   });
+  await waitFor(() => expect(result.current.isRestoring).toBe(false));
   const input = {
     name: 'Sam',
     email: 'context@example.com',

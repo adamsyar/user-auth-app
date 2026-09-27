@@ -1,3 +1,4 @@
+import { useAuth } from '../auth/AuthContext';
 import type { PropsWithChildren } from 'react';
 import {
   KeyboardAvoidingView,
@@ -10,6 +11,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { colors } from '../theme/theme';
 export function Screen({ children }: PropsWithChildren) {
+  const { storageWarning } = useAuth();
   return (
     <SafeAreaView style={styles.safe}>
       <KeyboardAvoidingView
@@ -26,7 +28,17 @@ export function Screen({ children }: PropsWithChildren) {
             </View>
             <Text style={styles.brandText}>Adam</Text>
           </View>
-          <View style={styles.content}>{children}</View>
+          <View style={styles.content}>
+            {storageWarning ? (
+              <Text
+                accessibilityRole="alert"
+                style={{ color: colors.error, marginBottom: 16 }}
+              >
+                {storageWarning}
+              </Text>
+            ) : null}
+            {children}
+          </View>
           <Text style={styles.bottom}>YOUR SPACE. YOUR PEOPLE.</Text>
         </ScrollView>
       </KeyboardAvoidingView>

@@ -4,6 +4,7 @@ import App from '../App';
 
 test('signup validation, registration, logout, rejected login, and successful login', async () => {
   await render(<App />);
+  await screen.findByText('Welcome back.');
   await fireEvent.press(screen.getByRole('button', { name: 'Go to Signup' }));
   await fireEvent.press(screen.getByRole('button', { name: 'Signup' }));
   expect(screen.getByText('Enter your name.')).toBeTruthy();
